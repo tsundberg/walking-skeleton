@@ -8,6 +8,23 @@ version = '1.0.0'
 
 dependencies {
     testCompile "junit:junit:4.12"
+    testCompile 'org.seleniumhq.selenium:selenium-java:2.45.0'
+}
+
+sourceSets {
+    acceptanceTest {
+        java.srcDir file('src/acceptanceTest/java')
+        resources.srcDir file('src/acceptanceTest/resources')
+        compileClasspath += main.output + test.output + configurations.testRuntime
+        runtimeClasspath += output + compileClasspath
+    }
+}
+
+task acceptanceTest(type: Test) {
+    description = 'Runs the acceptance tests'
+    group = 'verification'
+    testClassesDir = sourceSets.acceptanceTest.output.classesDir
+    classpath = sourceSets.acceptanceTest.runtimeClasspath
 }
 
 repositories {
