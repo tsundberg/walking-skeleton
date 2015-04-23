@@ -16,6 +16,8 @@ dependencies {
     compile 'io.dropwizard:dropwizard-jdbi:' + dropwizardVersion
     compile 'io.dropwizard:dropwizard-assets:' + dropwizardVersion
     compile 'io.dropwizard:dropwizard-views-mustache:' + dropwizardVersion
+    compile 'org.apache.derby:derby:10.11.1.1'
+    compile "org.flywaydb:flyway-core:3.2.1"
 
     testCompile "junit:junit:4.12"
     testCompile 'io.dropwizard:dropwizard-testing:' + dropwizardVersion
@@ -29,6 +31,13 @@ sourceSets {
         compileClasspath += main.output + test.output + configurations.testRuntime
         runtimeClasspath += output + compileClasspath
     }
+
+    integrationTest {
+        java.srcDir file('src/integrationTest/java')
+        resources.srcDir file('src/integrationTest/resources')
+        compileClasspath += main.output + test.output + configurations.testRuntime
+        runtimeClasspath += output + compileClasspath
+    }
 }
 
 task acceptanceTest(type: Test) {
@@ -36,6 +45,13 @@ task acceptanceTest(type: Test) {
     group = 'verification'
     testClassesDir = sourceSets.acceptanceTest.output.classesDir
     classpath = sourceSets.acceptanceTest.runtimeClasspath
+}
+
+task integrationTest(type: Test) {
+    description = 'Runs the integration tests'
+    group = 'verification'
+    testClassesDir = sourceSets.integrationTest.output.classesDir
+    classpath = sourceSets.integrationTest.runtimeClasspath
 }
 
 shadowJar {

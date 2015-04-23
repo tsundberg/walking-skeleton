@@ -1,3 +1,19 @@
+databaseHome: build/db-test
+
+database:
+  driverClass: org.apache.derby.jdbc.EmbeddedDriver
+  user: walking_skeleton
+  url: jdbc:derby:walking-skeleton;create=true
+
+  validationQuery: values 1
+  maxWaitForConnection: 1s
+  validationQueryTimeout: 3s
+  minSize: 8
+  maxSize: 32
+  checkConnectionWhileIdle: false
+  evictionInterval: 10s
+  minIdleTime: 1 minute
+
 server:
   applicationConnectors:
     - type: http
