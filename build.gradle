@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'jacoco'
+    id 'pmd'
 }
 
 version = '1.0.0'
@@ -11,6 +12,15 @@ dependencies {
 
 repositories {
     jcenter()
+}
+
+pmd {
+    toolVersion = '5.1.3'
+    ignoreFailures = true
+    ruleSets = [
+            'java-basic',
+            'java-unusedcode'
+    ]
 }
 
 task wrapper(type: Wrapper) {
