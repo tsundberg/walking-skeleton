@@ -18,7 +18,7 @@ public class PizzaOrderAcceptanceTest {
 
     @Before
     public void setUp() throws Exception {
-        // ApplicationRunner.runApplication();
+        ApplicationRunner.runApplication();
         browser = new FirefoxDriver();
         wait = new WebDriverWait(browser, 20);
     }
