@@ -1,13 +1,17 @@
 package se.thinkcode;
 
+import io.dropwizard.testing.ResourceHelpers;
+import io.dropwizard.testing.junit.DropwizardAppRule;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import se.thinkcode.infrastructure.Configuration;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -15,6 +19,10 @@ import static org.junit.Assert.assertThat;
 public class PizzaOrderAcceptanceTest {
     private WebDriver browser;
     private WebDriverWait wait;
+
+    @Rule
+    public final DropwizardAppRule<Configuration> application =
+            new DropwizardAppRule<>(Main.class, ResourceHelpers.resourceFilePath("test-configuration.yaml"));
 
     @Before
     public void setUp() throws Exception {

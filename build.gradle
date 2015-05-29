@@ -2,13 +2,24 @@ plugins {
     id 'java'
     id 'jacoco'
     id 'pmd'
+    id 'com.github.johnrengelman.shadow' version '1.2.1'
 }
 
 version = '1.0.0'
 
+project.ext {
+    dropwizardVersion = '0.8.1'
+}
+
 dependencies {
+    compile 'io.dropwizard:dropwizard-core:' + dropwizardVersion
+    compile 'io.dropwizard:dropwizard-jdbi:' + dropwizardVersion
+    compile 'io.dropwizard:dropwizard-assets:' + dropwizardVersion
+    compile 'io.dropwizard:dropwizard-views-mustache:' + dropwizardVersion
+
     testCompile "junit:junit:4.12"
-    testCompile "org.seleniumhq.selenium:selenium-java:2.45.0"
+    testCompile 'io.dropwizard:dropwizard-testing:' + dropwizardVersion
+    testCompile 'org.seleniumhq.selenium:selenium-java:2.45.0'
 }
 
 sourceSets {
@@ -37,6 +48,16 @@ pmd {
             'java-basic',
             'java-unusedcode'
     ]
+}
+
+shadowJar {
+    mergeServiceFiles()
+    exclude 'META-INF/*.DSA'
+    exclude 'META-INF/*.RSA'
+    manifest {
+        attributes 'Main-Class': 'se.thinkcode.Main',
+                'Implementation-Version': version
+    }
 }
 
 task wrapper(type: Wrapper) {
